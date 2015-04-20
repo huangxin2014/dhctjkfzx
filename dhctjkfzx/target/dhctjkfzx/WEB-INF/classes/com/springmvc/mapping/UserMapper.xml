@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springmvc.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.springmvc.model.User" >
+    <id column="USERID_" property="userid" jdbcType="INTEGER" />
+    <result column="NAME_" property="name" jdbcType="VARCHAR" />
+    <result column="ROLEID_" property="roleid" jdbcType="INTEGER" />
+    <result column="HOMETOWN" property="hometown" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    USERID_, NAME_, ROLEID_, HOMETOWN
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user
+    where USERID_ = #{userid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_user
+    where USERID_ = #{userid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.springmvc.model.User" >
+    insert into t_user (USERID_, NAME_, ROLEID_, 
+      HOMETOWN)
+    values (#{userid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{roleid,jdbcType=INTEGER}, 
+      #{hometown,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.springmvc.model.User" >
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        USERID_,
+      </if>
+      <if test="name != null" >
+        NAME_,
+      </if>
+      <if test="roleid != null" >
+        ROLEID_,
+      </if>
+      <if test="hometown != null" >
+        HOMETOWN,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="roleid != null" >
+        #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="hometown != null" >
+        #{hometown,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springmvc.model.User" >
+    update t_user
+    <set >
+      <if test="name != null" >
+        NAME_ = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="roleid != null" >
+        ROLEID_ = #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="hometown != null" >
+        HOMETOWN = #{hometown,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USERID_ = #{userid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springmvc.model.User" >
+    update t_user
+    set NAME_ = #{name,jdbcType=VARCHAR},
+      ROLEID_ = #{roleid,jdbcType=INTEGER},
+      HOMETOWN = #{hometown,jdbcType=VARCHAR}
+    where USERID_ = #{userid,jdbcType=INTEGER}
+  </update>
+</mapper>

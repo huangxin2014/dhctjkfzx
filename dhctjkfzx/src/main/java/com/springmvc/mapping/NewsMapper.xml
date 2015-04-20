@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springmvc.dao.NewsMapper">
+	<resultMap id="BaseResultMap" type="com.springmvc.model.News">
+		<id column="NEWSID_" property="newsid" jdbcType="INTEGER" />
+		<result column="NEWSTITLE_" property="newstitle" jdbcType="VARCHAR" />
+		<result column="NEWSINFO_" property="newsinfo" jdbcType="VARCHAR" />
+		<result column="UPDATETIME_" property="updatetime" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		NEWSID_, NEWSTITLE_, NEWSINFO_, UPDATETIME_
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_news
+		where NEWSID_ = #{newsid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from t_news
+		where NEWSID_ = #{newsid,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.springmvc.model.News">
+		insert into t_news (NEWSID_, NEWSTITLE_, NEWSINFO_,
+		UPDATETIME_)
+		values (#{newsid,jdbcType=INTEGER}, #{newstitle,jdbcType=VARCHAR},
+		#{newsinfo,jdbcType=VARCHAR},
+		#{updatetime,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.springmvc.model.News">
+		insert into t_news
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="newsid != null">
+				NEWSID_,
+			</if>
+			<if test="newstitle != null">
+				NEWSTITLE_,
+			</if>
+			<if test="newsinfo != null">
+				NEWSINFO_,
+			</if>
+			<if test="updatetime != null">
+				UPDATETIME_,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="newsid != null">
+				#{newsid,jdbcType=INTEGER},
+			</if>
+			<if test="newstitle != null">
+				#{newstitle,jdbcType=VARCHAR},
+			</if>
+			<if test="newsinfo != null">
+				#{newsinfo,jdbcType=VARCHAR},
+			</if>
+			<if test="updatetime != null">
+				#{updatetime,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.springmvc.model.News">
+		update t_news
+		<set>
+			<if test="newstitle != null">
+				NEWSTITLE_ = #{newstitle,jdbcType=VARCHAR},
+			</if>
+			<if test="newsinfo != null">
+				NEWSINFO_ = #{newsinfo,jdbcType=VARCHAR},
+			</if>
+			<if test="updatetime != null">
+				UPDATETIME_ = #{updatetime,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where NEWSID_ = #{newsid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.springmvc.model.News">
+		update t_news
+		set NEWSTITLE_ = #{newstitle,jdbcType=VARCHAR},
+		NEWSINFO_ = #{newsinfo,jdbcType=VARCHAR},
+		UPDATETIME_ = #{updatetime,jdbcType=VARCHAR}
+		where NEWSID_ = #{newsid,jdbcType=INTEGER}
+	</update>
+	<select id="selectOnePageNews" resultMap="BaseResultMap">
+		select * from t_news limit 5
+	</select>
+</mapper>
