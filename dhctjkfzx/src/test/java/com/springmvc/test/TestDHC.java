@@ -63,6 +63,6 @@ public class TestDHC {
 	public void test1(){
 		List<User> list = userService.getAll();
 		logger.info(JSON.toJSONString(list));
-		
+		System.out.println(1111);
 	}
 }
